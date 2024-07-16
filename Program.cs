@@ -1,3 +1,5 @@
+using middlewares;
+
 namespace base_asp;
 
 public class Program
@@ -8,6 +10,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         var app = builder.Build();
 
+        app.UseMiddleware<CounterMiddleware>();
         uint count = 0;
         app.Map(
             "/counter", appBuidler =>
