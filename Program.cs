@@ -4,11 +4,11 @@ namespace base_asp;
 
 public class Program
 {
-    public static readonly string answer = "Hey gey";
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         var app = builder.Build();
+        app.Environment.EnvironmentName = "Development";
 
         app.UseErrorHandling();
         app.UseToken("12345");        

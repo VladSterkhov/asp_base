@@ -16,7 +16,6 @@ class TokenMidleware
         var token = context.Request.Query["token"];
         if (token == pattern)
         {
-            Console.WriteLine(token);
             await next.Invoke(context);
         }
         else
