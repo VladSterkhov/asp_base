@@ -10,8 +10,9 @@ public class Program
         var app = builder.Build();
         app.Environment.EnvironmentName = "Development";
 
+        app.UseLogger();
         app.UseErrorHandling();
-        app.UseToken("12345");        
+        app.UseToken("12345");
         app.UseRoute();
         
         app.Run(async (context) => await context.Response.SendFileAsync("index.html"));
