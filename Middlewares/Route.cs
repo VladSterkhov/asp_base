@@ -4,7 +4,7 @@ public class RouteMiddlewares
 {
     private readonly RequestDelegate next;
 
-    private readonly List<string> routeMap = new() { "/index", "/counter"};
+    private readonly List<string> routeMap = new() { "/index", "/counter", "/services"};
 
     public RouteMiddlewares(RequestDelegate next) => this.next = next;
 
