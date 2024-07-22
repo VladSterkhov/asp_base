@@ -1,19 +1,22 @@
 using System.Text;
 using Middlewares;
+using Time;
 
 namespace Extensions;
 
 public static class RouteExtensions
 {
-    public static IApplicationBuilder UseRoute(this IApplicationBuilder builder, IServiceCollection services)
+    public static IApplicationBuilder UseRoute(this IApplicationBuilder builder, uint count, IServiceCollection services)
     {
         builder.UseMiddleware<RouteMiddlewares>();
+        var timeService = builder.ApplicationServices.GetService<ITimeService>();
         builder.Map("/counter", appBuilder =>
         {
             appBuilder.Run(async (context) =>
             {
+                count ++;
                 context.Response.StatusCode = 200;
-                await context.Response.WriteAsync("2");
+                await context.Response.WriteAsync($"{count} {timeService?.GetTime()}");
             });
         });
         builder.Map("/index", appBuilder =>
