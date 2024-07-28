@@ -2,5 +2,5 @@ namespace Time;
 
 class ShortTimeService : ITimeService
 {
-    public string GetTime() => DateTime.Now.ToLongTimeString();
+    public string GetTime() => DateTime.Now.ToShortTimeString();
 }

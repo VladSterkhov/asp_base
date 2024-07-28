@@ -9,8 +9,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        IServiceCollection allServices = builder.Services;
-        allServices.AddTransient<ITimeService, ShortTimeService>();
+        builder.Services.AddTimeService();
 
         var app = builder.Build();
         app.Environment.EnvironmentName = "Development";
@@ -18,7 +17,7 @@ public class Program
         app.UseLogger();
         app.UseErrorHandling();
         app.UseToken("12345");
-        app.UseRoute(count, allServices);
+        app.UseRoute(count);
         
         app.Run(async (context) => await context.Response.SendFileAsync("index.html"));
         app.Run();

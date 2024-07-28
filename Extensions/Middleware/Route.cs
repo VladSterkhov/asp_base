@@ -6,17 +6,24 @@ namespace Extensions;
 
 public static class RouteExtensions
 {
-    public static IApplicationBuilder UseRoute(this IApplicationBuilder builder, uint count, IServiceCollection services)
+    public static IApplicationBuilder UseRoute(this IApplicationBuilder builder, uint count)
     {
         builder.UseMiddleware<RouteMiddlewares>();
-        var timeService = builder.ApplicationServices.GetService<ITimeService>();
+
+#pragma warning disable  // Possible null reference argument.
+
+        TimeMessage currentTime = new(builder.ApplicationServices.GetService<TimeService>());
+#pragma warning restore  // Possible null reference argument.
+
+
         builder.Map("/counter", appBuilder =>
         {
             appBuilder.Run(async (context) =>
             {
                 count ++;
                 context.Response.StatusCode = 200;
-                await context.Response.WriteAsync($"{count} {timeService?.GetTime()}");
+                context.Response.ContentType = "text/html;charset=utf-8";
+                await context.Response.WriteAsync($"{count}<br>{currentTime?.GetTime()}");
             });
         });
         builder.Map("/index", appBuilder =>
@@ -28,17 +35,13 @@ public static class RouteExtensions
         });
         builder.Map("/services", appBuilder =>
         {
+            #pragma warning disable
             appBuilder.Run(async (context) =>
+            #pragma warning restore
             {
-                StringBuilder sb = new();
-                sb.Append("<ul>");
-                foreach(var service in services)
-                {
-                    sb.Append($"<li>{service.ServiceType.FullName}</li>");
-                }
-                sb.Append("</ul>");
                 context.Response.ContentType = "text/html;charset=utf-8";
-                await context.Response.WriteAsync(sb.ToString());
+                context.Response.StatusCode = 301;
+                context.Response.Redirect("/index?token=" + context.Request.Query["token"]);
             });
         });
         return builder;
