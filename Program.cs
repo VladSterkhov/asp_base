@@ -1,5 +1,4 @@
 using Extensions;
-using Time;
 
 namespace base_asp;
 
@@ -10,6 +9,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddTimeService();
+        builder.Services.AddLogger();
 
         var app = builder.Build();
         app.Environment.EnvironmentName = "Development";

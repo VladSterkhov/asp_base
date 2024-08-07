@@ -1,3 +1,5 @@
+using Time;
+
 namespace Middlewares;
 
 public class ErrorHandlingMiddleware
@@ -8,14 +10,15 @@ public class ErrorHandlingMiddleware
 
     public async Task Invoke(HttpContext context)
     {
+        var timeService = context.RequestServices.GetService<ITimeService>();
         await next.Invoke(context);
         if(context.Response.StatusCode == 403)
         {
-            await context.Response.WriteAsync("Access denied");
+            await context.Response.WriteAsync($"Access denied. Time:{timeService?.GetTime()}");
         }
         else if (context.Response.StatusCode == 404)
         {
-            await context.Response.WriteAsync("Not found");
+            await context.Response.WriteAsync($"Not found. Time:{timeService?.GetTime()}");
         }
     }
 }
