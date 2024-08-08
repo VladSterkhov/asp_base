@@ -12,7 +12,7 @@ public static class RouteExtensions
 
 #pragma warning disable  // Possible null reference argument.
 
-        TimeMessage currentTime = new(builder.ApplicationServices.GetService<TimeService>());
+        TimeMessage currentTime = builder.ApplicationServices.GetService<TimeMessage>();
 #pragma warning restore  // Possible null reference argument.
 
 

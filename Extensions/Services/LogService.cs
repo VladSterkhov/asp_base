@@ -6,7 +6,7 @@ public static class LogServiceExtensions
 {
     public static void AddLogger(this IServiceCollection services)
     {
-        services.AddTransient<Logs.ILogger, LogWriter>();
-        services.AddTransient<CustomLogs>();
+        services.AddScoped<Logs.ILogger, LogWriter>();
+        services.AddScoped<CustomLogs>();
     }
 }

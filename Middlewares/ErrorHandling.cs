@@ -10,7 +10,7 @@ public class ErrorHandlingMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        var timeService = context.RequestServices.GetService<ITimeService>();
+        var timeService = context.RequestServices.GetService<TimeMessage>();
         await next.Invoke(context);
         if(context.Response.StatusCode == 403)
         {
