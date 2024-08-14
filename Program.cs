@@ -8,11 +8,11 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddTimeService(); 
+        builder.Services.AddTimeService();
         builder.Services.AddLogger();
 
         var app = builder.Build();
-        app.Environment.EnvironmentName = "Development";
+        app.Environment.EnvironmentName = "Development"; 
 
         app.UseLogger();
         app.UseErrorHandling();
